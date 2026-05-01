@@ -511,7 +511,7 @@ export default function App() {
       <audio
         ref={audioRef}
         loop
-        src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Happy_Birthday_to_You_%28instrumental%29.ogg"
+        src={`${import.meta.env.BASE_URL}audio/crackers.mp3`}
         preload="auto"
       />
 
