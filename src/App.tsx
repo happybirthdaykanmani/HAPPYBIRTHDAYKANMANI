@@ -140,7 +140,7 @@ const FloatingBalloons = () => {
 
 // ── Sound: play crackers audio file from /audio/crackers.mp3 ─────────────────
 const playFirecrackerSound = () => {
-  const audio = new Audio('/audio/crackers.mp3');
+  const audio = new Audio(`${import.meta.env.BASE_URL}audio/crackers.mp3`);
   audio.volume = 1.0;
   audio.play().catch((e) => console.warn('Cracker sound blocked:', e));
 };
@@ -626,18 +626,18 @@ export default function App() {
 
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6">
               {[
-                { img: "/images/img5.jpeg", title: "Beautiful Moments", height: "h-64" },
-                { img: "/images/img2.jpeg", title: "Coffee Dates", height: "h-96" },
-                { img: "/images/img3.jpeg", title: "Your Smile", height: "h-48" },
-                { img: "/images/img4.jpeg", title: "Perfect Evenings", height: "h-80" },
-                { img: "/images/img1.jpeg", title: "Adventures", height: "h-52" },
-                { img: "/images/img10.jpeg", title: "Golden Hour", height: "h-64" },
-                { img: "/images/img7.jpeg", title: "Wanderlust", height: "h-48" },
-                { img: "/images/img8.jpeg", title: "City Lights", height: "h-72" },
-                { img: "/images/img9.jpeg", title: "Sunrise", height: "h-52" },
-                { img: "/images/img6.jpeg", title: "Our Journey", height: "h-96" },
-                { img: "/images/img11.jpeg", title: "Sweet Escape", height: "h-48" },
-                { img: "/images/img12.jpeg", title: "Forever Us", height: "h-80" },
+                { img: `${import.meta.env.BASE_URL}images/img5.jpeg`, title: "Beautiful Moments", height: "h-64" },
+                { img: `${import.meta.env.BASE_URL}images/img2.jpeg`, title: "Coffee Dates", height: "h-96" },
+                { img: `${import.meta.env.BASE_URL}images/img3.jpeg`, title: "Your Smile", height: "h-48" },
+                { img: `${import.meta.env.BASE_URL}images/img4.jpeg`, title: "Perfect Evenings", height: "h-80" },
+                { img: `${import.meta.env.BASE_URL}images/img1.jpeg`, title: "Adventures", height: "h-52" },
+                { img: `${import.meta.env.BASE_URL}images/img10.jpeg`, title: "Golden Hour", height: "h-64" },
+                { img: `${import.meta.env.BASE_URL}images/img7.jpeg`, title: "Wanderlust", height: "h-48" },
+                { img: `${import.meta.env.BASE_URL}images/img8.jpeg`, title: "City Lights", height: "h-72" },
+                { img: `${import.meta.env.BASE_URL}images/img9.jpeg`, title: "Sunrise", height: "h-52" },
+                { img: `${import.meta.env.BASE_URL}images/img6.jpeg`, title: "Our Journey", height: "h-96" },
+                { img: `${import.meta.env.BASE_URL}images/img11.jpeg`, title: "Sweet Escape", height: "h-48" },
+                { img: `${import.meta.env.BASE_URL}images/img12.jpeg`, title: "Forever Us", height: "h-80" },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -754,7 +754,7 @@ export default function App() {
                   playsInline
                   preload="auto"
                 >
-                  <source src="/video/video1.mp4" type="video/mp4" />
+                  <source src={`${import.meta.env.BASE_URL}video/video1.mp4`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
