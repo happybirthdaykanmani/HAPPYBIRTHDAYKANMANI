@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Heart, Sparkles, Gift, Star, Coffee, Music, VolumeX, Cake as CakeIcon } from 'lucide-react';
+import { Heart, Sparkles, Gift, Star, Coffee, Music, VolumeX, Cake as CakeIcon, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const FloatingHearts = () => {
   const [hearts, setHearts] = useState<{ id: number; left: string; delay: number; duration: number; size: number; opacity: number }[]>([]);
@@ -425,6 +425,134 @@ const AnimatedCake = ({ onCut, onBlow }: { onCut: () => void; onBlow: () => void
 };
 
 
+const galleryItems = [
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img5.jpeg`, title: "Beautiful Moments", height: "h-64" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img2.jpeg`, title: "Coffee Dates", height: "h-96" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img3.jpeg`, title: "Your Smile", height: "h-48" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img4.jpeg`, title: "Perfect Evenings", height: "h-80" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img1.jpeg`, title: "Adventures", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img10.jpeg`, title: "Golden Hour", height: "h-64" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img7.jpeg`, title: "Wanderlust", height: "h-48" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img8.jpeg`, title: "City Lights", height: "h-72" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img9.jpeg`, title: "Sunrise", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img6.jpeg`, title: "Our Journey", height: "h-96" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img11.jpeg`, title: "Sweet Escape", height: "h-48" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img12.jpeg`, title: "Forever Us", height: "h-80" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video7.mp4`, title: "Funny Side", height: "h-64" },
+];
+
+const weTogetherItems = [
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video1.mp4`, title: "Our Special Movie", height: "h-96" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img13.jpeg`, title: "Happy Times", height: "h-64" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img14.jpeg`, title: "Sweet Smiles", height: "h-48" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img15.jpeg`, title: "Warm Embraces", height: "h-80" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img16.jpeg`, title: "Together Always", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img17.jpeg`, title: "Beautiful Days", height: "h-64" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video6.mp4`, title: "Special Memories", height: "h-72" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video4.mp4`, title: "Laughter & Joy", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img20.jpeg`, title: "Always You", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img20.jpeg`, title: "Perfect Moments", height: "h-96" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video2.mp4`, title: "Side by Side", height: "h-48" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video5.mp4`, title: "Hearts Connected", height: "h-80" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video3.mp4`, title: "Pure Happiness", height: "h-64" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img24.jpeg`, title: "Forever & Ever", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img25.jpeg`, title: "Cherished Times", height: "h-72" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img26.jpeg`, title: "True Love", height: "h-96" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img27.jpeg`, title: "Endless Memories", height: "h-48" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img14.jpeg`, title: "Shared Dreams", height: "h-80" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img29.jpeg`, title: "Our Little World", height: "h-64" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img31.jpeg`, title: "Infinite Love", height: "h-72" }
+];
+
+const Lightbox = ({
+  item,
+  onClose,
+  onNext,
+  onPrev
+}: {
+  item: { type: string; src: string; title: string };
+  onClose: () => void;
+  onNext: () => void;
+  onPrev: () => void;
+}) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onNext, onPrev, onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 z-[110] text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors cursor-pointer"
+        aria-label="Close Lightbox"
+      >
+        <X size={24} />
+      </button>
+
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        className="absolute left-4 sm:left-6 z-[110] text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors cursor-pointer"
+        aria-label="Previous Media"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        className="absolute right-4 sm:right-6 z-[110] text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors cursor-pointer"
+        aria-label="Next Media"
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      <motion.div
+        initial={{ scale: 0.95, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.95, y: 20 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center rounded-2xl overflow-hidden px-4"
+      >
+        {item.type === 'video' ? (
+          <video
+            src={item.src}
+            controls
+            autoPlay
+            playsInline
+            className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl border border-white/10"
+          />
+        ) : (
+          <img
+            src={item.src}
+            alt={item.title}
+            className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl border border-white/10"
+          />
+        )}
+        <div className="mt-4 text-center">
+          <p className="font-serif text-xl sm:text-2xl text-white font-bold tracking-wide drop-shadow-sm">{item.title}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 
 export default function App() {
@@ -433,6 +561,29 @@ export default function App() {
   const [cakeKey, setCakeKey] = useState(0);
   const [isBlowing, setIsBlowing] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const [activeMediaList, setActiveMediaList] = useState<{ type: string; src: string; title: string }[]>([]);
+  const [activeMediaIndex, setActiveMediaIndex] = useState<number>(-1);
+
+  const handleOpenLightbox = (list: { type: string; src: string; title: string }[], index: number) => {
+    setActiveMediaList(list);
+    setActiveMediaIndex(index);
+  };
+
+  const handleNextLightbox = () => {
+    if (activeMediaList.length === 0) return;
+    setActiveMediaIndex((prev) => (prev + 1) % activeMediaList.length);
+  };
+
+  const handlePrevLightbox = () => {
+    if (activeMediaList.length === 0) return;
+    setActiveMediaIndex((prev) => (prev - 1 + activeMediaList.length) % activeMediaList.length);
+  };
+
+  const handleCloseLightbox = () => {
+    setActiveMediaIndex(-1);
+  };
+
 
   const handleBlowCandles = () => {
     playFirecrackerSound();
@@ -625,27 +776,15 @@ export default function App() {
             </motion.h2>
 
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6">
-              {[
-                { img: `${import.meta.env.BASE_URL}images/img5.jpeg`, title: "Beautiful Moments", height: "h-64" },
-                { img: `${import.meta.env.BASE_URL}images/img2.jpeg`, title: "Coffee Dates", height: "h-96" },
-                { img: `${import.meta.env.BASE_URL}images/img3.jpeg`, title: "Your Smile", height: "h-48" },
-                { img: `${import.meta.env.BASE_URL}images/img4.jpeg`, title: "Perfect Evenings", height: "h-80" },
-                { img: `${import.meta.env.BASE_URL}images/img1.jpeg`, title: "Adventures", height: "h-52" },
-                { img: `${import.meta.env.BASE_URL}images/img10.jpeg`, title: "Golden Hour", height: "h-64" },
-                { img: `${import.meta.env.BASE_URL}images/img7.jpeg`, title: "Wanderlust", height: "h-48" },
-                { img: `${import.meta.env.BASE_URL}images/img8.jpeg`, title: "City Lights", height: "h-72" },
-                { img: `${import.meta.env.BASE_URL}images/img9.jpeg`, title: "Sunrise", height: "h-52" },
-                { img: `${import.meta.env.BASE_URL}images/img6.jpeg`, title: "Our Journey", height: "h-96" },
-                { img: `${import.meta.env.BASE_URL}images/img11.jpeg`, title: "Sweet Escape", height: "h-48" },
-                { img: `${import.meta.env.BASE_URL}images/img12.jpeg`, title: "Forever Us", height: "h-80" },
-              ].map((item, i) => (
+              {galleryItems.map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: (i % 3) * 0.15, duration: 0.6 }}
-                  className="glass-panel p-3 rounded-[32px] overflow-hidden group hover:bg-white/40 transition-all duration-300 break-inside-avoid relative inline-block w-full mb-6"
+                  onClick={() => handleOpenLightbox(galleryItems, i)}
+                  className="glass-panel p-3 rounded-[32px] overflow-hidden group hover:bg-white/40 transition-all duration-300 break-inside-avoid relative inline-block w-full mb-6 cursor-pointer"
                 >
                   <div className={`relative w-full ${item.height} rounded-[24px] overflow-hidden shadow-inner`}>
                     <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 via-pink-500/20 to-transparent z-10 opacity-70 mix-blend-overlay"></div>
@@ -654,7 +793,29 @@ export default function App() {
                         {item.title}
                       </span>
                     </div>
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] ease-out" />
+                    {item.type === 'video' ? (
+                      <div className="w-full h-full relative">
+                        <video
+                          src={item.src}
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                        />
+                        <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md p-2 rounded-full border border-white/10 text-white/90">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                          </svg>
+                        </div>
+                      </div>
+                    ) : (
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
+                      />
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -794,13 +955,85 @@ export default function App() {
             </motion.div>
 
             <div className="glass-panel px-8 sm:px-10 py-5 sm:py-6 rounded-[28px] sm:rounded-[32px] inline-flex flex-col items-center">
-              <p className="text-white/70 font-sans text-xs uppercase tracking-[0.4em] mb-2">For You, Always</p>
+              <p className="text-white/70 font-sans text-xs uppercase tracking-[0.4em] mb-2">I'M Here For You, Always</p>
               <p className="text-white font-bold font-serif text-xl sm:text-2xl leading-tight">KANMANI</p>
+            </div>
+          </section>
+
+          {/* We Together Gallery Section */}
+          <section className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-10 sm:mb-16"
+            >
+              We Together <br />
+              <span className="text-white/90 italic font-light">Every moment is a beautiful memory✨</span>
+            </motion.h2>
+
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6">
+              {weTogetherItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: (i % 4) * 0.1, duration: 0.6 }}
+                  onClick={() => handleOpenLightbox(weTogetherItems, i)}
+                  className="glass-panel p-3 rounded-[32px] overflow-hidden group hover:bg-white/40 transition-all duration-300 break-inside-avoid relative inline-block w-full mb-6 cursor-pointer"
+                >
+                  <div className={`relative w-full ${item.height} rounded-[24px] overflow-hidden shadow-inner`}>
+                    <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 via-pink-500/20 to-transparent z-10 opacity-70 mix-blend-overlay"></div>
+                    <div className="absolute bottom-4 left-0 w-full text-center z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                      <span className="glass-panel backdrop-blur-md px-6 py-3 rounded-full font-sans text-white font-medium text-xs tracking-widest uppercase drop-shadow-md border border-white/40">
+                        {item.title}
+                      </span>
+                    </div>
+
+                    {item.type === 'video' ? (
+                      <div className="w-full h-full relative">
+                        <video
+                          src={item.src}
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                        />
+                        <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md p-2 rounded-full border border-white/10 text-white/90">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                          </svg>
+                        </div>
+                      </div>
+                    ) : (
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
+                      />
+                    )}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </section>
 
         </div>
       )}
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {activeMediaIndex >= 0 && (
+          <Lightbox
+            item={activeMediaList[activeMediaIndex]}
+            onClose={handleCloseLightbox}
+            onNext={handleNextLightbox}
+            onPrev={handlePrevLightbox}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
