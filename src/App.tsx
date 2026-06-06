@@ -415,13 +415,12 @@ const AnimatedCake = ({ onCut, onBlow }: { onCut: () => void; onBlow: () => void
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleAction}
-        className={`mt-12 px-6 py-3 rounded-full text-white font-sans font-bold shadow-lg uppercase tracking-wider text-sm transition-all duration-300 cursor-pointer ${
-          !candlesBlown 
-            ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]' 
-            : isCut 
-              ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]' 
+        className={`mt-12 px-6 py-3 rounded-full text-white font-sans font-bold shadow-lg uppercase tracking-wider text-sm transition-all duration-300 cursor-pointer ${!candlesBlown
+            ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]'
+            : isCut
+              ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]'
               : 'bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
-        }`}
+          }`}
       >
         {!candlesBlown ? 'Blow the Candles!' : isCut ? '🍫 Delicious!' : '🔪 Cut the Cake!'}
       </motion.button>
@@ -461,7 +460,7 @@ const weTogetherItems = [
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video5.mp4`, title: "Hearts Connected", height: "h-80" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video3.mp4`, title: "Pure Happiness", height: "h-64" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video10.mp4`, title: "Forever & Ever", height: "h-52" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img21.jpeg`, title: "Cherished Times", height: "h-72" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img24.jpeg`, title: "Cherished Times", height: "h-72" },
   { type: 'image', src: `${import.meta.env.BASE_URL}images/img23.jpeg`, title: "True Love", height: "h-96" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video9.mp4`, title: "Endless Memories", height: "h-48" },
   { type: 'image', src: `${import.meta.env.BASE_URL}images/img14.jpeg`, title: "Shared Dreams", height: "h-80" },
