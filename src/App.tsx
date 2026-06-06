@@ -415,8 +415,13 @@ const AnimatedCake = ({ onCut, onBlow }: { onCut: () => void; onBlow: () => void
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleAction}
-        className="mt-12 glass-panel px-6 py-3 rounded-full text-white font-sans font-bold shadow-lg uppercase tracking-wider text-sm transition-colors"
-        style={{ borderColor: 'rgba(255,255,255,0.4)', background: candlesBlown && !isCut ? 'rgba(92,40,0,0.6)' : 'rgba(219,39,119,0.4)' }}
+        className={`mt-12 px-6 py-3 rounded-full text-white font-sans font-bold shadow-lg uppercase tracking-wider text-sm transition-all duration-300 cursor-pointer ${
+          !candlesBlown 
+            ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]' 
+            : isCut 
+              ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]' 
+              : 'bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
+        }`}
       >
         {!candlesBlown ? 'Blow the Candles!' : isCut ? '🍫 Delicious!' : '🔪 Cut the Cake!'}
       </motion.button>
@@ -450,18 +455,18 @@ const weTogetherItems = [
   { type: 'image', src: `${import.meta.env.BASE_URL}images/img17.jpeg`, title: "Beautiful Days", height: "h-64" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video6.mp4`, title: "Special Memories", height: "h-72" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video4.mp4`, title: "Laughter & Joy", height: "h-52" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img20.jpeg`, title: "Always You", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img21.jpeg`, title: "Always You", height: "h-52" },
   { type: 'image', src: `${import.meta.env.BASE_URL}images/img20.jpeg`, title: "Perfect Moments", height: "h-96" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video2.mp4`, title: "Side by Side", height: "h-48" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video5.mp4`, title: "Hearts Connected", height: "h-80" },
   { type: 'video', src: `${import.meta.env.BASE_URL}video/video3.mp4`, title: "Pure Happiness", height: "h-64" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img24.jpeg`, title: "Forever & Ever", height: "h-52" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img25.jpeg`, title: "Cherished Times", height: "h-72" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img26.jpeg`, title: "True Love", height: "h-96" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img27.jpeg`, title: "Endless Memories", height: "h-48" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video10.mp4`, title: "Forever & Ever", height: "h-52" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img21.jpeg`, title: "Cherished Times", height: "h-72" },
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img23.jpeg`, title: "True Love", height: "h-96" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video9.mp4`, title: "Endless Memories", height: "h-48" },
   { type: 'image', src: `${import.meta.env.BASE_URL}images/img14.jpeg`, title: "Shared Dreams", height: "h-80" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img29.jpeg`, title: "Our Little World", height: "h-64" },
-  { type: 'image', src: `${import.meta.env.BASE_URL}images/img31.jpeg`, title: "Infinite Love", height: "h-72" }
+  { type: 'image', src: `${import.meta.env.BASE_URL}images/img22.jpeg`, title: "Our Little World", height: "h-64" },
+  { type: 'video', src: `${import.meta.env.BASE_URL}video/video8.mp4`, title: "Infinite Love", height: "h-72" }
 ];
 
 const Lightbox = ({
@@ -650,10 +655,46 @@ export default function App() {
   };
 
   const reasons = [
-    { icon: <Heart size={24} className="text-white" fill="currentColor" />, title: "Your beautiful heart", desc: "The way you care for everyone around you." },
-    { icon: <Sparkles size={24} className="text-white" />, title: "That stunning smile", desc: "It lights up my entire world the moment I see it." },
-    { icon: <Star size={24} className="text-white" fill="currentColor" />, title: "Your weird jokes", desc: "Because you always know exactly how to make me laugh." },
-    { icon: <Coffee size={24} className="text-white" />, title: "Our quiet moments", desc: "Doing absolutely nothing together is my favorite thing to do." }
+    {
+      icon: (className?: string) => <Heart className={className || "text-white"} size={24} fill="currentColor" />,
+      title: "Your beautiful heart",
+      desc: "The way you care for everyone around you.",
+      themeClass: "glass-panel-rose",
+      iconBg: "bg-rose-500/20 text-rose-300",
+      titleColor: "text-rose-100 group-hover:text-rose-300",
+      descColor: "text-rose-200/80",
+      glowBg: "text-rose-500/10"
+    },
+    {
+      icon: (className?: string) => <Sparkles className={className || "text-white"} size={24} />,
+      title: "That stunning smile",
+      desc: "It lights up my entire world the moment I see it.",
+      themeClass: "glass-panel-amber",
+      iconBg: "bg-amber-500/20 text-amber-300",
+      titleColor: "text-amber-100 group-hover:text-amber-300",
+      descColor: "text-amber-200/80",
+      glowBg: "text-amber-500/10"
+    },
+    {
+      icon: (className?: string) => <Star className={className || "text-white"} size={24} fill="currentColor" />,
+      title: "Your weird jokes",
+      desc: "Because you always know exactly how to make me laugh.",
+      themeClass: "glass-panel-cyan",
+      iconBg: "bg-cyan-500/20 text-cyan-300",
+      titleColor: "text-cyan-100 group-hover:text-cyan-300",
+      descColor: "text-cyan-200/80",
+      glowBg: "text-cyan-500/10"
+    },
+    {
+      icon: (className?: string) => <Coffee className={className || "text-white"} size={24} />,
+      title: "Our quiet moments",
+      desc: "Doing absolutely nothing together is my favorite thing to do.",
+      themeClass: "glass-panel-violet",
+      iconBg: "bg-violet-500/20 text-violet-300",
+      titleColor: "text-violet-100 group-hover:text-violet-300",
+      descColor: "text-violet-200/80",
+      glowBg: "text-violet-500/10"
+    }
   ];
 
   return (
@@ -709,13 +750,13 @@ export default function App() {
             className="glass-panel p-8 sm:p-10 flex flex-col items-center justify-center w-full max-w-sm rounded-[32px] sm:rounded-[40px] text-center"
           >
             <div className="flex justify-center mb-5">
-              <Gift className="w-12 h-12 sm:w-16 sm:h-16 text-white/90 animate-bounce" />
+              <Gift className="w-12 h-12 sm:w-16 sm:h-16 text-pink-400 drop-shadow-[0_0_15px_rgba(244,63,94,0.6)] animate-bounce" />
             </div>
-            <h1 className="font-serif text-2xl sm:text-3xl text-white font-bold mb-2 drop-shadow-sm">I have something for you...</h1>
-            <p className="text-white/80 mb-7 font-sans font-medium text-base sm:text-lg tracking-wide">Are you ready?</p>
+            <h1 className="font-serif text-2xl sm:text-3xl text-gradient-pink-gold font-bold mb-2 drop-shadow-sm glow-text-pink">I have something for you...</h1>
+            <p className="text-cyan-200/90 mb-7 font-sans font-semibold text-base sm:text-lg tracking-wide">Are you ready?</p>
             <button
               onClick={handleOpen}
-              className="glass-panel px-8 py-4 rounded-full text-white font-sans font-bold hover:bg-white/20 transition-all uppercase tracking-widest text-xs w-full shadow-lg"
+              className="bg-gradient-to-r from-pink-500 via-rose-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 text-white font-sans font-bold px-8 py-4 rounded-full uppercase tracking-widest text-xs w-full shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:shadow-[0_0_35px_rgba(236,72,153,0.7)] transition-all duration-300 transform active:scale-95 cursor-pointer"
             >
               Tap to Open
             </button>
@@ -732,9 +773,9 @@ export default function App() {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="glass-panel p-8 sm:p-12 md:p-20 rounded-[32px] sm:rounded-[40px] max-w-2xl mx-auto shadow-2xl"
           >
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-white font-bold mb-4 sm:mb-6 drop-shadow-lg">Happy Birthday!</h1>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-gradient-rainbow font-extrabold mb-4 sm:mb-6 drop-shadow-lg glow-text-pink">Happy Birthday!</h1>
             <p className="font-sans text-base sm:text-xl md:text-2xl text-white/90 italic drop-shadow-sm leading-relaxed tracking-wide">
-              "You make every day brighter just by being in it. Here's to you, <span className="font-bold underline decoration-pink-300 underline-offset-4">KANMANI</span>."
+              "You make every day <span className="text-cyan-300 font-semibold not-italic">brighter</span> just by being in it. Here's to you, <span className="font-love text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-amber-300 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)] underline decoration-cyan-300 underline-offset-8">KANMANI</span>."
             </p>
           </motion.div>
         </div>
@@ -750,16 +791,16 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
             >
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl text-white font-bold mb-6 sm:mb-8 leading-tight drop-shadow-sm">
-                Happy <br />
-                <span className="text-white/90 italic font-medium">&amp;</span> Beautiful <br />
-                Birthday
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl font-bold mb-6 sm:mb-8 leading-tight drop-shadow-sm">
+                <span className="text-gradient-rose glow-text-pink">Happy</span> <br />
+                <span className="text-white/90 italic font-medium">&amp;</span> <span className="text-gradient-cyan glow-text-cyan">Beautiful</span> <br />
+                <span className="text-gradient-gold glow-text-gold">Birthday</span>
               </h1>
-              <p className="font-sans tracking-[0.15em] sm:tracking-[0.2em] uppercase mt-2 mb-6 sm:mb-8 text-xl sm:text-2xl md:text-4xl font-bold text-white/90">
-                KANMANI(Azhagi)
+              <p className="font-sans mt-2 mb-6 sm:mb-8 text-xl sm:text-2xl md:text-4xl font-extrabold">
+                <span className="font-love text-5xl sm:text-6xl md:text-7xl text-gradient-pink-gold drop-shadow-[0_0_15px_rgba(236,72,153,0.5)] tracking-normal normal-case">KANMANI (Azhagi)</span>
               </p>
               <p className="text-white/90 text-base sm:text-xl max-w-lg mx-auto italic font-serif leading-relaxed drop-shadow-sm px-2">
-                "To the one who makes every day feel like a celebration. May your day be as beautiful, kind, and radiant as you are."
+                "To the one who makes every day feel like a <span className="text-pink-300 font-semibold not-italic">celebration</span>. May your day be as <span className="text-cyan-200 font-semibold not-italic">beautiful</span>, <span className="text-rose-200 font-semibold not-italic">kind</span>, and <span className="text-amber-200 font-semibold not-italic">radiant</span> as you are."
               </p>
             </motion.div>
           </section>
@@ -770,9 +811,10 @@ export default function App() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-10 sm:mb-16"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-sm mb-10 sm:mb-16"
             >
-              A Million Reasons to Love You <br /><span className="text-white/90 italic font-light">Kanmani❤️</span>
+              <span className="text-gradient-cyan">A Million Reasons to Love You</span> <br />
+              <span className="font-love font-normal text-4xl sm:text-5xl text-gradient-pink-gold glow-text-pink">Kanmani❤️</span>
             </motion.h2>
 
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6">
@@ -829,25 +871,25 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              className="glass-panel p-7 sm:p-10 md:p-16 rounded-[32px] sm:rounded-[40px] flex flex-col justify-center"
+              className="glass-panel-rose p-7 sm:p-10 md:p-16 rounded-[32px] sm:rounded-[40px] flex flex-col justify-center shadow-[0_10px_40px_rgba(244,63,94,0.15)] border-rose-500/20"
             >
-              <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-white/80 mx-auto mb-6 sm:mb-8 animate-pulse" fill="currentColor" />
+              <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-pink-400 drop-shadow-[0_0_12px_rgba(244,63,94,0.6)] mx-auto mb-6 sm:mb-8 animate-pulse" fill="currentColor" />
               <div className="font-serif text-lg sm:text-xl md:text-2xl text-white/95 leading-relaxed text-center space-y-5 sm:space-y-6">
                 <p>
-                  I wanted to make something special for you today, because "special" is exactly what you are to me.
+                  I wanted to make something special for you today, because <span className="text-pink-300 font-semibold not-italic">"special"</span> is exactly what you are to me.
                 </p>
                 <p>
-                  Every single day with you feels like a gift. You bring so much color, joy, and warmth into my life that I honestly don't know what I did to deserve you.
+                  Every single day with you feels like a <span className="text-amber-300 font-semibold not-italic">gift</span>. You bring so much <span className="text-gradient-rainbow font-extrabold not-italic drop-shadow-sm">color, joy, and warmth</span> into my life that I honestly don't know what I did to deserve you.
                 </p>
                 <p>
-                  I hope this year brings you as much happiness as you give to everyone around you. I can't wait to celebrate many more birthdays by your side.
+                  I hope this year brings you as much <span className="text-cyan-300 font-semibold not-italic">happiness</span> as you give to everyone around you. I can't wait to celebrate many more <span className="text-rose-300 font-semibold not-italic">birthdays</span> by your side.
                 </p>
                 <div className="mt-8 sm:mt-12 flex items-center justify-center gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/30 flex items-center justify-center text-white relative">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white relative shadow-lg">
                     <Heart size={18} fill="currentColor" />
-                    <div className="absolute inset-0 rounded-full border border-white/50 scale-110"></div>
+                    <div className="absolute inset-0 rounded-full border border-pink-400/50 scale-110 animate-pulse"></div>
                   </div>
-                  <span className="font-sans text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-[0.2em]">With all my love</span>
+                  <span className="font-sans text-xs sm:text-sm font-bold text-pink-200/90 uppercase tracking-[0.2em]">With all my love</span>
                 </div>
               </div>
             </motion.div>
@@ -859,9 +901,10 @@ export default function App() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-10 sm:mb-16"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-sm mb-10 sm:mb-16"
             >
-              Just a few reasons why <br /><span className="text-white/90 italic font-light">I adore you</span>
+              <span className="text-gradient-rose">Just a few reasons why</span> <br />
+              <span className="text-gradient-pink-gold italic font-medium glow-text-pink">I adore you</span>
             </motion.h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
@@ -872,16 +915,16 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: i * 0.2, duration: 0.6 }}
-                  className="glass-panel p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] text-left group hover:bg-white/30 transition-all duration-300 relative overflow-hidden"
+                  className={`p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] text-left group hover:scale-[1.02] transition-all duration-300 relative overflow-hidden ${reason.themeClass}`}
                 >
-                  <div className="absolute top-0 right-0 p-8 opacity-opacity-10 scale-150 text-white/10 transform rotate-12 transition-transform group-hover:scale-125">
-                    {reason.icon}
+                  <div className={`absolute top-0 right-0 p-8 opacity-25 scale-150 transform rotate-12 transition-transform duration-500 group-hover:scale-125 ${reason.glowBg}`}>
+                    {reason.icon("w-16 h-16")}
                   </div>
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 sm:mb-6 shadow-inner relative z-10">
-                    {reason.icon}
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-6 shadow-inner relative z-10 ${reason.iconBg}`}>
+                    {reason.icon("w-6 h-6")}
                   </div>
-                  <h3 className="font-serif text-xl sm:text-2xl text-white mb-2 sm:mb-3 font-semibold relative z-10">{reason.title}</h3>
-                  <p className="font-sans text-white/80 leading-relaxed text-sm relative z-10">{reason.desc}</p>
+                  <h3 className={`font-serif text-xl sm:text-2xl mb-2 sm:mb-3 font-semibold relative z-10 transition-colors duration-300 ${reason.titleColor}`}>{reason.title}</h3>
+                  <p className={`font-sans leading-relaxed text-sm relative z-10 ${reason.descColor}`}>{reason.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -893,9 +936,10 @@ export default function App() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-10 sm:mb-16"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-sm mb-10 sm:mb-16"
             >
-              A Special Message <br /><span className="text-white/90 italic font-light">Just for You</span>
+              <span className="text-gradient-cyan">A Special Message</span> <br />
+              <span className="text-gradient-rose italic font-medium glow-text-pink">Just for You</span>
             </motion.h2>
 
             <motion.div
@@ -928,9 +972,10 @@ export default function App() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-14 sm:mb-24"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-sm mb-14 sm:mb-24"
             >
-              Make a Wish <br /><span className="text-white/90 italic font-light">Cut the Cake</span>
+              <span className="text-gradient-rose glow-text-pink">Make a Wish</span> <br />
+              <span className="text-gradient-gold italic font-medium glow-text-gold">Cut the Cake</span>
             </motion.h2>
 
             <AnimatedCake key={cakeKey} onCut={triggerConfetti} onBlow={handleBlowCandles} />
@@ -946,7 +991,7 @@ export default function App() {
             >
               <button
                 onClick={() => { triggerConfetti(); setCakeKey(k => k + 1); }}
-                className="glass-panel w-full sm:w-auto px-8 py-4 rounded-full text-white font-sans font-bold hover:bg-white/30 transition-all uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                className="bg-gradient-to-r from-pink-500 via-rose-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 w-full sm:w-auto px-8 py-4 rounded-full text-white font-sans font-bold transition-all uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_35px_rgba(236,72,153,0.6)] transform active:scale-95 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 group-hover:animate-spin" />
                 Celebrate Again
@@ -954,9 +999,9 @@ export default function App() {
               </button>
             </motion.div>
 
-            <div className="glass-panel px-8 sm:px-10 py-5 sm:py-6 rounded-[28px] sm:rounded-[32px] inline-flex flex-col items-center">
-              <p className="text-white/70 font-sans text-xs uppercase tracking-[0.4em] mb-2">I'M Here For You, Always</p>
-              <p className="text-white font-bold font-serif text-xl sm:text-2xl leading-tight">KANMANI</p>
+            <div className="glass-panel-rose px-8 sm:px-10 py-5 sm:py-6 rounded-[28px] sm:rounded-[32px] inline-flex flex-col items-center border-rose-500/20 shadow-[0_4px_20px_rgba(244,63,94,0.1)]">
+              <p className="text-pink-200/80 font-sans text-xs uppercase tracking-[0.4em] mb-2 font-semibold">I'M Here For You, Always</p>
+              <p className="font-love text-3xl sm:text-4xl text-gradient-pink-gold leading-tight glow-text-pink">KANMANI</p>
             </div>
           </section>
 
@@ -966,10 +1011,11 @@ export default function App() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold drop-shadow-sm mb-10 sm:mb-16"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-sm mb-10 sm:mb-16"
             >
-              We Together <br />
-              <span className="text-white/90 italic font-light">Every moment is a beautiful memory✨</span>
+              <span className="text-gradient-rose glow-text-pink">We Together</span> <br />
+              <span className="font-serif text-2xl sm:text-3xl md:text-4xl text-gradient-cyan italic font-medium"
+              >Every moment is a beautiful memory✨</span>
             </motion.h2>
 
             <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6">

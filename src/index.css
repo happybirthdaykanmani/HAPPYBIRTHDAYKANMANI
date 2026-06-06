@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400\u0026display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Love+Light&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Georgia", ui-serif, Cambria, "Times New Roman", Times, serif;
+  --font-serif: "Dancing Script", "Great Vibes", cursive, Georgia, serif;
+  --font-love: "Love Light", cursive;
 }
 
 body {
-  @apply font-serif antialiased overflow-x-hidden;
+  @apply font-sans antialiased overflow-x-hidden;
   margin: 0;
   padding: 0;
   background-color: #071e26;
@@ -36,3 +37,83 @@ body {
   border: 1px solid rgba(6, 182, 212, 0.25);
   box-shadow: 0 8px 32px 0 rgba(236, 72, 153, 0.18), 0 0 0 0.5px rgba(6,182,212,0.12);
 }
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, #f43f5e 0%, #fda4af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-pink-gold {
+  background: linear-gradient(135deg, #ec4899 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #fef08a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-rainbow {
+  background: linear-gradient(to right, #ff4d8d, #ec4899, #fbbf24, #22d3ee, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-text-pink {
+  text-shadow: 0 0 10px rgba(236, 72, 153, 0.5), 0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.glow-text-gold {
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5), 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.glass-panel-rose {
+  background: rgba(244, 63, 94, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(244, 63, 94, 0.12), 0 0 0 0.5px rgba(244, 63, 94, 0.08);
+}
+
+.glass-panel-amber {
+  background: rgba(245, 158, 11, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.12), 0 0 0 0.5px rgba(245, 158, 11, 0.08);
+}
+
+.glass-panel-cyan {
+  background: rgba(6, 182, 212, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(6, 182, 212, 0.12), 0 0 0 0.5px rgba(6, 182, 212, 0.08);
+}
+
+.glass-panel-violet {
+  background: rgba(139, 92, 246, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.12), 0 0 0 0.5px rgba(139, 92, 246, 0.08);
+}
+
