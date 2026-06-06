@@ -416,10 +416,10 @@ const AnimatedCake = ({ onCut, onBlow }: { onCut: () => void; onBlow: () => void
         whileTap={{ scale: 0.95 }}
         onClick={handleAction}
         className={`mt-12 px-6 py-3 rounded-full text-white font-sans font-bold shadow-lg uppercase tracking-wider text-sm transition-all duration-300 cursor-pointer ${!candlesBlown
-            ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]'
-            : isCut
-              ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]'
-              : 'bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
+          ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]'
+          : isCut
+            ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]'
+            : 'bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
           }`}
       >
         {!candlesBlown ? 'Blow the Candles!' : isCut ? '🍫 Delicious!' : '🔪 Cut the Cake!'}
@@ -774,7 +774,7 @@ export default function App() {
           >
             <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-gradient-rainbow font-extrabold mb-4 sm:mb-6 drop-shadow-lg glow-text-pink">Happy Birthday!</h1>
             <p className="font-sans text-base sm:text-xl md:text-2xl text-white/90 italic drop-shadow-sm leading-relaxed tracking-wide">
-              "You make every day <span className="text-cyan-300 font-semibold not-italic">brighter</span> just by being in it. Here's to you, <span className="font-love text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-amber-300 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)] underline decoration-cyan-300 underline-offset-8">KANMANI</span>."
+              "You make every day <span className="text-cyan-300 font-semibold not-italic">brighter</span> just by being in it. Here's to you, <span className="font-love text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-amber-300 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">KANMANI</span>."
             </p>
           </motion.div>
         </div>
