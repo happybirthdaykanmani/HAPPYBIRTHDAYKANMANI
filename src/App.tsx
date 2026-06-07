@@ -32,6 +32,139 @@ const FloatingHearts = () => {
   );
 };
 
+const CornerDecorations = () => {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+      {/* Top-Left: Bird on branch */}
+      <motion.div 
+        className="absolute top-3 left-3 sm:top-6 sm:left-6 pointer-events-auto cursor-help flex items-center gap-1 select-none"
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 0.85, x: 0 }}
+        transition={{ delay: 1, duration: 0.8 }}
+        whileHover={{ scale: 1.15, rotate: -5 }}
+      >
+        <span className="text-2xl sm:text-4xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">🐦</span>
+        <span className="text-base sm:text-2xl opacity-80">🌿🌸</span>
+      </motion.div>
+
+      {/* Top-Right: Fluttering Butterfly (below music button) */}
+      <motion.div 
+        className="absolute top-20 right-3 sm:top-24 sm:right-6 pointer-events-auto cursor-help flex items-center gap-1 select-none"
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 0.8, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        whileHover={{ scale: 1.15 }}
+      >
+        <motion.span 
+          className="text-xl sm:text-3xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] inline-block"
+          animate={{ rotateY: [0, 60, 0], y: [0, -3, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          🦋
+        </motion.span>
+        <span className="text-sm sm:text-lg opacity-85">🌹</span>
+      </motion.div>
+
+      {/* Bottom-Left: Cute Puppy and Sunflower */}
+      <motion.div 
+        className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 pointer-events-auto cursor-help flex items-end gap-1 select-none"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 0.9, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+        whileHover={{ scale: 1.12, y: -4 }}
+      >
+        <motion.span 
+          className="text-3xl sm:text-5xl filter drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] inline-block"
+          animate={{ rotate: [0, -6, 6, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          🐶
+        </motion.span>
+        <span className="text-2xl sm:text-4xl filter drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]">🌻</span>
+        <span className="text-sm sm:text-xl opacity-75">🐾</span>
+      </motion.div>
+
+      {/* Bottom-Right: Sleeping Bunny in Bouquet */}
+      <motion.div 
+        className="absolute bottom-3 right-12 sm:bottom-6 sm:right-16 pointer-events-auto cursor-help flex items-end gap-1 select-none"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 0.9, y: 0 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        whileHover={{ scale: 1.12, y: -4 }}
+      >
+        <span className="text-2xl sm:text-4xl filter drop-shadow-[0_0_8px_rgba(236,72,153,0.3)]">💐</span>
+        <motion.span 
+          className="text-3xl sm:text-5xl filter drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] inline-block"
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          🐰
+        </motion.span>
+        <span className="text-lg sm:text-2xl filter drop-shadow-[0_0_6px_rgba(236,72,153,0.4)]">🌸</span>
+      </motion.div>
+    </div>
+  );
+};
+
+const FloatingSunflowers = () => {
+  const sunflowers = useRef(
+    Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      delay: Math.random() * 5,
+      duration: Math.random() * 12 + 15,
+      size: Math.random() * 20 + 16,
+      opacity: Math.random() * 0.15 + 0.1,
+    }))
+  ).current;
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {sunflowers.map(sf => (
+        <motion.div key={sf.id} className="absolute bottom-[-60px]" style={{ left: sf.left, fontSize: sf.size, opacity: sf.opacity }}
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: '-115vh', x: [0, 45, -45, 0], opacity: [0, sf.opacity, sf.opacity, 0], rotate: [0, 180, 360] }}
+          transition={{ duration: sf.duration, delay: sf.delay, repeat: Infinity, ease: 'linear' }}
+        >
+          🌻
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+const FloatingButterflies = () => {
+  const butterflies = useRef(
+    Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      delay: Math.random() * 6,
+      duration: Math.random() * 10 + 15,
+      size: Math.random() * 12 + 10,
+      opacity: Math.random() * 0.3 + 0.35,
+      flapDur: Math.random() * 0.12 + 0.12,
+    }))
+  ).current;
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[80]">
+      {butterflies.map(b => (
+        <motion.div key={b.id} className="absolute bottom-[-60px]" style={{ left: b.left }}
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: '-115vh', x: [0, 40, -40, 0], opacity: [0, b.opacity, b.opacity, 0] }}
+          transition={{ duration: b.duration, delay: b.delay, repeat: Infinity, ease: 'linear' }}
+        >
+          <motion.div 
+            style={{ fontSize: b.size }}
+            animate={{ rotateY: [0, 80, 0], y: [0, -3, 0] }}
+            transition={{ duration: b.flapDur, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🦋
+          </motion.div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
 const TwinklingStars = () => {
   const stars = useRef(
     Array.from({ length: 55 }, (_, i) => ({
@@ -244,7 +377,7 @@ const WelcomeScreen = ({ onEnter }: { onEnter: () => void }) => {
             filter: 'drop-shadow(0 0 20px rgba(236,72,153,0.4))',
           }}
         >
-          Enter the World<br />Where You're<br />Loved Most
+          Enter the World 💖<br />Where You're<br />Loved Most ✨
         </motion.h1>
 
         <motion.p
@@ -253,7 +386,7 @@ const WelcomeScreen = ({ onEnter }: { onEnter: () => void }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.8 }}
         >
-          A little universe made just for you, with all my heart 💕
+          A little universe filled with sunflowers and love just for you 💕 🌻✨
         </motion.p>
 
         {/* CTA Button */}
@@ -309,7 +442,7 @@ const BirthdayMessageScreen = ({ onDone }: { onDone: () => void }) => {
   };
 
   const line1 = 'Happy Birthday';
-  const line2 = 'This is for you, Kanmani 🌸';
+  const line2 = 'This is for you, Kanmani 🌻';
 
   return (
     <motion.div
@@ -421,7 +554,7 @@ const BirthdayMessageScreen = ({ onDone }: { onDone: () => void }) => {
                 animate={{ scale: [1, 1.04, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                Kanmani 🌸
+                Kanmani 🌻
               </motion.p>
             </motion.div>
           )}
@@ -866,6 +999,8 @@ export default function App() {
       />
       <TwinklingStars />
       <FloatingHearts />
+      <FloatingSunflowers />
+      <FloatingButterflies />
       {(balloonsActive || cakeComplete) && <FloatingBalloons burst={balloonsActive} />}
 
 
@@ -889,6 +1024,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         {phase === 'sections' && (
           <motion.div key="sections-shell" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            {cakeComplete && <CornerDecorations />}
 
             {/* Music button */}
             {cakeComplete && (
@@ -979,14 +1115,14 @@ export default function App() {
                       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-widest mb-6 text-pink-300/80"
                         style={{ background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.3)' }}
                       >
-                        <Sparkles size={12} /> 🎂 Happy Birthday Kanmani! <Sparkles size={12} />
+                        <Sparkles size={12} /> 🎂 Happy Birthday Kanmani! 🌻💖 <Sparkles size={12} />
                       </div>
                       <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl font-bold mb-4 leading-tight">
                         <span className="text-gradient-rose glow-text-pink">It's Your</span><br />
                         <span className="text-gradient-gold glow-text-gold">Special Day!</span>
                       </h1>
                       <p className="text-white/55 font-sans text-base sm:text-lg mb-10 max-w-sm mx-auto">
-                        Blow the candles, cut the cake — and let the celebration begin! 🎉
+                        Blow the candles 🕯️, cut the cake 🔪 — and let the celebration begin! 🎉🥳
                       </p>
                     </motion.div>
 
@@ -1024,22 +1160,22 @@ export default function App() {
                         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                       >🎂</motion.div>
                       <h1 className="font-serif text-5xl sm:text-6xl md:text-9xl font-bold mb-6 leading-tight">
-                        <span className="text-gradient-rose glow-text-pink">Happy</span><br />
+                        <span className="text-gradient-rose glow-text-pink">Happy 🥳</span><br />
                         <span className="text-white/80 italic font-medium text-4xl sm:text-5xl md:text-6xl">&amp;</span>{' '}
-                        <span className="text-gradient-cyan glow-text-cyan">Beautiful</span><br />
-                        <span className="text-gradient-gold glow-text-gold">Birthday</span>
+                        <span className="text-gradient-cyan glow-text-cyan">Beautiful ✨</span><br />
+                        <span className="text-gradient-gold glow-text-gold">Birthday 🎂</span>
                       </h1>
                       <p className="font-sans mt-4 mb-8">
                         <span className="font-love text-5xl sm:text-6xl md:text-8xl text-gradient-pink-gold drop-shadow-[0_0_20px_rgba(236,72,153,0.6)] tracking-normal normal-case inline-block animate-float">
-                          KANMANI (Azhagi)
+                          KANMANI (Azhagi) 🌻💖
                         </span>
                       </p>
                       <p className="text-white/80 text-base sm:text-xl max-w-lg mx-auto italic font-serif leading-relaxed">
                         "To the one who makes every day feel like a{' '}
-                        <span className="text-pink-300 font-semibold not-italic">celebration</span>. May your day be as{' '}
-                        <span className="text-cyan-200 font-semibold not-italic">beautiful</span>,{' '}
-                        <span className="text-rose-200 font-semibold not-italic">kind</span>, and{' '}
-                        <span className="text-amber-200 font-semibold not-italic">radiant</span> as you are."
+                        <span className="text-pink-300 font-semibold not-italic">celebration 🎈</span>. May your day be as{' '}
+                        <span className="text-cyan-200 font-semibold not-italic">beautiful ✨</span>,{' '}
+                        <span className="text-rose-200 font-semibold not-italic">kind 💞</span>, and{' '}
+                        <span className="text-amber-200 font-semibold not-italic">radiant ☀️</span> as you are."
                       </p>
                       <motion.div className="mt-10 flex items-center justify-center gap-3"
                         animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2.5, repeat: Infinity }}
@@ -1061,9 +1197,9 @@ export default function App() {
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="text-center mb-14">
                       <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
-                        <span className="text-gradient-cyan">A Million Reasons to Love You</span>
+                        <span className="text-gradient-cyan">A Million Reasons to Love You 💖✨</span>
                       </h2>
-                      <span className="font-love font-normal text-4xl sm:text-5xl text-gradient-pink-gold glow-text-pink">Kanmani❤️</span>
+                      <span className="font-love font-normal text-4xl sm:text-5xl text-gradient-pink-gold glow-text-pink">Kanmani❤️ 🌻</span>
                     </motion.div>
                     <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
                       {galleryItems.map((item, i) => (
@@ -1110,9 +1246,9 @@ export default function App() {
                     >
                       <Heart className="w-12 h-12 text-pink-400 drop-shadow-[0_0_16px_rgba(244,63,94,0.7)] mx-auto mb-8 animate-pulse" fill="currentColor" />
                       <div className="font-serif text-lg sm:text-xl md:text-2xl text-white/93 leading-relaxed text-center space-y-6">
-                        <p>I wanted to make something special for you today, because <span className="text-pink-300 font-semibold not-italic">"special"</span> is exactly what you are to me.</p>
-                        <p>Every single day with you feels like a <span className="text-amber-300 font-semibold not-italic">gift</span>. You bring so much <span className="text-gradient-rainbow font-extrabold not-italic">color, joy, and warmth</span> into my life that I honestly don't know what I did to deserve you.</p>
-                        <p>I hope this year brings you as much <span className="text-cyan-300 font-semibold not-italic">happiness</span> as you give to everyone around you. I can't wait to celebrate many more <span className="text-rose-300 font-semibold not-italic">birthdays</span> by your side.</p>
+                        <p>I wanted to make something special for you today 🎁, because <span className="text-pink-300 font-semibold not-italic">"special"</span> is exactly what you are to me. 💖</p>
+                        <p>Every single day with you feels like a <span className="text-amber-300 font-semibold not-italic">gift 🎁</span>. You bring so much <span className="text-gradient-rainbow font-extrabold not-italic">color 🌈, joy 😄, and warmth ☀️</span> into my life that I honestly don't know what I did to deserve you. 🥰</p>
+                        <p>I hope this year brings you as much <span className="text-cyan-300 font-semibold not-italic">happiness 😊</span> as you give to everyone around you. I can't wait to celebrate many more <span className="text-rose-300 font-semibold not-italic">birthdays 🎂</span> by your side. 💑</p>
                         <div className="mt-12 flex items-center justify-center gap-4">
                           <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center relative shadow-lg">
                             <Heart size={18} fill="currentColor" className="text-white" />
@@ -1138,7 +1274,7 @@ export default function App() {
                       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center mb-14">
                         <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
                           <span className="text-gradient-rose">Just a few reasons why</span><br />
-                          <span className="text-gradient-pink-gold italic font-medium glow-text-pink">I adore you</span>
+                          <span className="text-gradient-pink-gold italic font-medium glow-text-pink">I adore you 🌻💞</span>
                         </h2>
                         <p className="text-white/40 text-xs uppercase tracking-widest mt-4 flex items-center justify-center gap-2">
                           <span>Click each card to reveal my heart</span>
@@ -1237,8 +1373,8 @@ export default function App() {
                   <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-24">
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center mb-12">
                       <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold">
-                        <span className="text-gradient-cyan">A Special Message</span><br />
-                        <span className="text-gradient-rose italic font-medium glow-text-pink">Just for You</span>
+                        <span className="text-gradient-cyan">A Special Message 🎬🍿</span><br />
+                        <span className="text-gradient-rose italic font-medium glow-text-pink">Just for You 🥰</span>
                       </h2>
                     </motion.div>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
@@ -1264,9 +1400,9 @@ export default function App() {
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center mb-14">
                       <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
-                        <span className="text-gradient-rose glow-text-pink">We Together</span>
+                        <span className="text-gradient-rose glow-text-pink">We Together 🫶👩‍❤️‍👨</span>
                       </h2>
-                      <span className="font-serif text-2xl sm:text-3xl text-gradient-cyan italic font-medium">Every moment is a beautiful memory ✨</span>
+                      <span className="font-serif text-2xl sm:text-3xl text-gradient-cyan italic font-medium">Every moment is a beautiful memory ✨💖📸</span>
                     </motion.div>
                     <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-5">
                       {weTogetherItems.map((item, i) => (
@@ -1313,8 +1449,8 @@ export default function App() {
                         <Sparkles className="w-4 h-4" />
                       </motion.button>
                       <div className="glass-panel-rose px-10 py-6 rounded-[32px] inline-flex flex-col items-center">
-                        <p className="text-pink-200/70 font-sans text-xs uppercase tracking-[0.4em] mb-2 font-semibold">I'm Here For You, Always</p>
-                        <p className="font-love text-4xl sm:text-5xl text-gradient-pink-gold glow-text-pink">KANMANI</p>
+                        <p className="text-pink-200/70 font-sans text-xs uppercase tracking-[0.4em] mb-2 font-semibold">I'm Here For You, Always 🤝💫</p>
+                        <p className="font-love text-4xl sm:text-5xl text-gradient-pink-gold glow-text-pink">KANMANI 🌻</p>
                       </div>
                     </motion.div>
                   </div>
