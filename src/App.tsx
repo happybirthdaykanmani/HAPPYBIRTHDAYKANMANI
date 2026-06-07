@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Heart, Sparkles, Star, Coffee, Music, VolumeX, X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { Heart, Sparkles, Star, Coffee, Music, VolumeX, X, ChevronLeft, ChevronRight, ChevronDown, Smile, Sun, Flame, MessageCircle } from 'lucide-react';
 
 /* ═══════════════════════════════════════════════════════════════════
    AMBIENT PARTICLES
@@ -727,6 +727,10 @@ const reasons = [
   { icon: (cls?: string) => <Sparkles className={cls || 'text-white'} size={24} />, title: 'That stunning smile', desc: 'It lights up my entire world the moment I see it.', themeClass: 'glass-panel-amber', iconBg: 'bg-amber-500/20 text-amber-300', titleColor: 'text-amber-100 group-hover:text-amber-300', descColor: 'text-amber-200/80', glowBg: 'text-amber-500/10' },
   { icon: (cls?: string) => <Star className={cls || 'text-white'} size={24} fill="currentColor" />, title: 'Your weird jokes', desc: 'Because you always know exactly how to make me laugh.', themeClass: 'glass-panel-cyan', iconBg: 'bg-cyan-500/20 text-cyan-300', titleColor: 'text-cyan-100 group-hover:text-cyan-300', descColor: 'text-cyan-200/80', glowBg: 'text-cyan-500/10' },
   { icon: (cls?: string) => <Coffee className={cls || 'text-white'} size={24} />, title: 'Our quiet moments', desc: 'Doing absolutely nothing together is my favourite thing.', themeClass: 'glass-panel-violet', iconBg: 'bg-violet-500/20 text-violet-300', titleColor: 'text-violet-100 group-hover:text-violet-300', descColor: 'text-violet-200/80', glowBg: 'text-violet-500/10' },
+  { icon: (cls?: string) => <Flame className={cls || 'text-white'} size={24} />, title: 'Your comforting warmth', desc: 'How safe and at home I feel whenever I am near you.', themeClass: 'glass-panel-rose', iconBg: 'bg-rose-500/20 text-rose-300', titleColor: 'text-rose-100 group-hover:text-rose-300', descColor: 'text-rose-200/80', glowBg: 'text-rose-500/10' },
+  { icon: (cls?: string) => <Sun className={cls || 'text-white'} size={24} />, title: 'You are my sunshine', desc: 'Brightening up even my darkest days with your warm presence.', themeClass: 'glass-panel-amber', iconBg: 'bg-amber-500/20 text-amber-300', titleColor: 'text-amber-100 group-hover:text-amber-300', descColor: 'text-amber-200/80', glowBg: 'text-amber-500/10' },
+  { icon: (cls?: string) => <Smile className={cls || 'text-white'} size={24} />, title: 'Your infectious laughter', desc: 'The sweet sound that instantly puts a smile on my face.', themeClass: 'glass-panel-cyan', iconBg: 'bg-cyan-500/20 text-cyan-300', titleColor: 'text-cyan-100 group-hover:text-cyan-300', descColor: 'text-cyan-200/80', glowBg: 'text-cyan-500/10' },
+  { icon: (cls?: string) => <MessageCircle className={cls || 'text-white'} size={24} />, title: 'Our endless conversations', desc: 'How we can talk for hours about everything and nothing at all.', themeClass: 'glass-panel-violet', iconBg: 'bg-violet-500/20 text-violet-300', titleColor: 'text-violet-100 group-hover:text-violet-300', descColor: 'text-violet-200/80', glowBg: 'text-violet-500/10' },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -758,6 +762,7 @@ export default function App() {
   const [cakeKey, setCakeKey]           = useState(0);
   const [activeMediaList, setActiveMediaList] = useState<{ type: string; src: string; title: string }[]>([]);
   const [activeMediaIndex, setActiveMediaIndex] = useState(-1);
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const totalSections = SECTION_LABELS.length;
@@ -832,6 +837,10 @@ export default function App() {
     triggerConfetti();
     setDirection(1);
     setCurrentSection(1);
+  };
+
+  const toggleCard = (idx: number) => {
+    setFlippedCards(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
 
   const toggleAudio = () => {
@@ -1126,25 +1135,92 @@ export default function App() {
                 >
                   <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-24">
                     <div className="max-w-4xl w-full">
-                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center mb-14">
-                        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold">
+                      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center mb-14">
+                        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
                           <span className="text-gradient-rose">Just a few reasons why</span><br />
                           <span className="text-gradient-pink-gold italic font-medium glow-text-pink">I adore you</span>
                         </h2>
+                        <p className="text-white/40 text-xs uppercase tracking-widest mt-4 flex items-center justify-center gap-2">
+                          <span>Click each card to reveal my heart</span>
+                          <Sparkles size={12} className="text-amber-300 animate-pulse" />
+                        </p>
                       </motion.div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {reasons.map((r, i) => (
-                          <motion.div key={i}
-                            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.15, duration: 0.6 }}
-                            className={`p-7 sm:p-9 rounded-[32px] text-left group hover:scale-[1.03] transition-all duration-300 relative overflow-hidden ${r.themeClass}`}
-                          >
-                            <div className={`absolute top-0 right-0 p-8 opacity-20 scale-150 rotate-12 group-hover:scale-125 transition-transform duration-500 ${r.glowBg}`}>{r.icon('w-16 h-16')}</div>
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-5 shadow-inner relative z-10 ${r.iconBg}`}>{r.icon('w-6 h-6')}</div>
-                            <h3 className={`font-serif text-xl sm:text-2xl mb-2 font-semibold relative z-10 transition-colors duration-300 ${r.titleColor}`}>{r.title}</h3>
-                            <p className={`font-sans leading-relaxed text-sm relative z-10 ${r.descColor}`}>{r.desc}</p>
-                          </motion.div>
-                        ))}
+                        {reasons.map((r, i) => {
+                          const isFlipped = !!flippedCards[i];
+                          const getBackStyle = (theme: string) => {
+                            switch (theme) {
+                              case 'glass-panel-rose':
+                                return { text: 'text-rose-200', border: 'border-rose-500/30' };
+                              case 'glass-panel-amber':
+                                return { text: 'text-amber-200', border: 'border-amber-500/30' };
+                              case 'glass-panel-cyan':
+                                return { text: 'text-cyan-200', border: 'border-cyan-500/30' };
+                              case 'glass-panel-violet':
+                                return { text: 'text-violet-200', border: 'border-violet-500/30' };
+                              default:
+                                return { text: 'text-pink-200', border: 'border-pink-500/30' };
+                            }
+                          };
+                          const backStyle = getBackStyle(r.themeClass);
+                          return (
+                            <motion.div key={i}
+                              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: i * 0.1, duration: 0.6 }}
+                              className="w-full h-[240px] perspective-1000 cursor-pointer group"
+                              onClick={() => toggleCard(i)}
+                            >
+                              <div
+                                className="w-full h-full relative preserve-3d transition-transform duration-700 ease-out"
+                                style={{
+                                  transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                                }}
+                              >
+                                {/* FRONT SIDE */}
+                                <div className={`absolute inset-0 backface-hidden p-7 sm:p-9 rounded-[32px] flex flex-col justify-between items-start ${r.themeClass} border border-white/10 shadow-lg hover:scale-[1.02] hover:bg-white/[0.05] transition-all duration-300 overflow-hidden`}>
+                                  {/* Decorative glowing background */}
+                                  <div className={`absolute top-0 right-0 p-8 opacity-20 scale-150 rotate-12 group-hover:scale-125 transition-transform duration-500 ${r.glowBg}`}>{r.icon('w-16 h-16')}</div>
+                                  
+                                  <div className="flex flex-col gap-4 w-full">
+                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-inner relative z-10 ${r.iconBg} animate-pulse`}>
+                                      {r.icon('w-6 h-6')}
+                                    </div>
+                                    <h3 className={`font-serif text-2xl sm:text-3xl font-semibold relative z-10 transition-colors duration-300 ${r.titleColor}`}>
+                                      {r.title}
+                                    </h3>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-2 text-xs font-sans text-white/50 group-hover:text-white/80 transition-colors uppercase tracking-widest mt-4 relative z-10">
+                                    <span>Read Note</span>
+                                    <Heart size={12} className="text-pink-400 fill-pink-400 animate-pulse" />
+                                  </div>
+                                </div>
+
+                                {/* BACK SIDE */}
+                                <div className={`absolute inset-0 backface-hidden rotate-y-180 p-7 sm:p-9 rounded-[32px] flex flex-col justify-center items-center text-center ${r.themeClass} border ${backStyle.border} shadow-2xl overflow-hidden`}
+                                  style={{ background: 'linear-gradient(135deg, rgba(13, 5, 25, 0.94) 0%, rgba(5, 2, 10, 0.98) 100%)' }}
+                                >
+                                  {/* Decorative background icon */}
+                                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                                    {r.icon('w-48 h-48')}
+                                  </div>
+
+                                  <div className="relative z-10 flex flex-col items-center justify-center gap-3">
+                                    <div className="text-pink-400 animate-bounce">
+                                      {r.icon('w-6 h-6')}
+                                    </div>
+                                    <p className={`font-serif text-xl sm:text-2xl ${backStyle.text} leading-relaxed font-semibold px-2`}>
+                                      "{r.desc}"
+                                    </p>
+                                    <div className="mt-4 text-[10px] font-sans text-white/40 uppercase tracking-widest">
+                                      Click to flip back
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
