@@ -36,7 +36,7 @@ const CornerDecorations = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
       {/* Top-Left: Bird on branch */}
-      <motion.div 
+      <motion.div
         className="absolute top-3 left-3 sm:top-6 sm:left-6 pointer-events-auto cursor-help flex items-center gap-1 select-none"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 0.85, x: 0 }}
@@ -48,14 +48,14 @@ const CornerDecorations = () => {
       </motion.div>
 
       {/* Top-Right: Fluttering Butterfly (below music button) */}
-      <motion.div 
+      <motion.div
         className="absolute top-20 right-3 sm:top-24 sm:right-6 pointer-events-auto cursor-help flex items-center gap-1 select-none"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 0.8, x: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
         whileHover={{ scale: 1.15 }}
       >
-        <motion.span 
+        <motion.span
           className="text-xl sm:text-3xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] inline-block"
           animate={{ rotateY: [0, 60, 0], y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
@@ -66,14 +66,14 @@ const CornerDecorations = () => {
       </motion.div>
 
       {/* Bottom-Left: Cute Puppy and Sunflower */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 pointer-events-auto cursor-help flex items-end gap-1 select-none"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 0.9, y: 0 }}
         transition={{ delay: 1.4, duration: 0.8 }}
         whileHover={{ scale: 1.12, y: -4 }}
       >
-        <motion.span 
+        <motion.span
           className="text-3xl sm:text-5xl filter drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] inline-block"
           animate={{ rotate: [0, -6, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
@@ -85,7 +85,7 @@ const CornerDecorations = () => {
       </motion.div>
 
       {/* Bottom-Right: Sleeping Bunny in Bouquet */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-3 right-12 sm:bottom-6 sm:right-16 pointer-events-auto cursor-help flex items-end gap-1 select-none"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 0.9, y: 0 }}
@@ -93,7 +93,7 @@ const CornerDecorations = () => {
         whileHover={{ scale: 1.12, y: -4 }}
       >
         <span className="text-2xl sm:text-4xl filter drop-shadow-[0_0_8px_rgba(236,72,153,0.3)]">💐</span>
-        <motion.span 
+        <motion.span
           className="text-3xl sm:text-5xl filter drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] inline-block"
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -152,7 +152,7 @@ const FloatingButterflies = () => {
           animate={{ y: '-115vh', x: [0, 40, -40, 0], opacity: [0, b.opacity, b.opacity, 0] }}
           transition={{ duration: b.duration, delay: b.delay, repeat: Infinity, ease: 'linear' }}
         >
-          <motion.div 
+          <motion.div
             style={{ fontSize: b.size }}
             animate={{ rotateY: [0, 80, 0], y: [0, -3, 0] }}
             transition={{ duration: b.flapDur, repeat: Infinity, ease: 'easeInOut' }}
@@ -274,7 +274,26 @@ const FirecrackerParticles = ({ active }: { active: boolean }) => {
 /* ═══════════════════════════════════════════════════════════════════
    WELCOME / INTRO SCREEN  (Phase 0)
 ══════════════════════════════════════════════════════════════════════ */
-const WelcomeScreen = ({ onEnter }: { onEnter: () => void }) => {
+const WelcomeScreen = ({ onEnter, isEntering }: { onEnter: () => void; isEntering: boolean }) => {
+  // Loading text rotating phrases
+  const [loadingPhrase, setLoadingPhrase] = useState("Preparing your universe... 💖");
+
+  useEffect(() => {
+    if (!isEntering) return;
+    const phrases = [
+      "Preparing your universe... 💖",
+      "Gathering fresh sunflowers... 🌻",
+      "Tuning the romantic melodies... 🎵",
+      "Opening the doors to your heart... 💌"
+    ];
+    let i = 0;
+    const interval = setInterval(() => {
+      i = (i + 1) % phrases.length;
+      setLoadingPhrase(phrases[i]);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [isEntering]);
+
   // Slowly rotating love orbs
   const orbs = [
     { color: '#ff4d8d55', size: 420, x: '15%', y: '20%', dur: 8 },
@@ -389,29 +408,80 @@ const WelcomeScreen = ({ onEnter }: { onEnter: () => void }) => {
           A little universe filled with sunflowers and love just for you 💕 🌻✨
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.button
-          onClick={onEnter}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.0 }}
-          whileHover={{ scale: 1.07, boxShadow: '0 0 60px rgba(236,72,153,0.8)' }}
-          whileTap={{ scale: 0.94 }}
-          className="relative px-10 py-5 rounded-full font-sans font-bold text-white uppercase tracking-widest text-sm cursor-pointer overflow-hidden group"
-          style={{
-            background: 'linear-gradient(135deg, #ec4899, #f43f5e, #a855f7)',
-            boxShadow: '0 0 30px rgba(236,72,153,0.5)',
-          }}
-        >
-          {/* Shimmer overlay */}
-          <motion.div
-            className="absolute inset-0 opacity-0 group-hover:opacity-30"
-            style={{ background: 'linear-gradient(90deg, transparent, white, transparent)', skewX: '-20deg' }}
-            animate={{ x: ['-100%', '200%'] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-          />
-          ✨ Enter My World ✨
-        </motion.button>
+        {/* CTA Button or Loading progress */}
+        <AnimatePresence mode="wait">
+          {!isEntering ? (
+            <motion.button
+              key="enter-btn"
+              onClick={onEnter}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              whileHover={{ scale: 1.07, boxShadow: '0 0 60px rgba(236,72,153,0.8)' }}
+              whileTap={{ scale: 0.94 }}
+              className="relative px-10 py-5 rounded-full font-sans font-bold text-white uppercase tracking-widest text-sm cursor-pointer overflow-hidden group"
+              style={{
+                background: 'linear-gradient(135deg, #ec4899, #f43f5e, #a855f7)',
+                boxShadow: '0 0 30px rgba(236,72,153,0.5)',
+              }}
+            >
+              {/* Shimmer overlay */}
+              <motion.div
+                className="absolute inset-0 opacity-0 group-hover:opacity-30"
+                style={{ background: 'linear-gradient(90deg, transparent, white, transparent)', skewX: '-20deg' }}
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+              />
+              ✨ Enter My World ✨
+            </motion.button>
+          ) : (
+            <motion.div
+              key="entering-loader"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center gap-6 mt-4 w-full"
+            >
+              {/* Spinning Sunflower / Heart Loading Badge */}
+              <div className="relative w-16 h-16 flex items-center justify-center">
+                <motion.div
+                  className="absolute inset-0 text-5xl flex items-center justify-center select-none"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                >
+                  🌻
+                </motion.div>
+                <Heart size={20} fill="#ec4899" className="text-pink-500 animate-pulse relative z-10" />
+              </div>
+
+              {/* Status text */}
+              <motion.p
+                key={loadingPhrase}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                className="text-pink-300 font-serif italic text-lg tracking-wide min-h-[28px]"
+              >
+                {loadingPhrase}
+              </motion.p>
+
+              {/* Progress track */}
+              <div className="w-64 h-1.5 bg-white/10 rounded-full overflow-hidden border border-white/5 shadow-inner">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-pink-500 via-amber-500 to-cyan-500"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 10, ease: "linear" }}
+                />
+              </div>
+
+              <span className="text-[10px] font-sans text-white/30 uppercase tracking-[0.25em] animate-pulse">
+                Loading celebration...
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
@@ -741,13 +811,12 @@ const AnimatedCake = ({ onCut, onBlow, onDone }: { onCut: () => void; onBlow: ()
           whileHover={{ scale: 1.07 }} whileTap={{ scale: 0.95 }}
           onClick={handleAction}
           style={{ minWidth: 220 }}
-          className={`px-8 py-4 rounded-full text-white font-sans font-bold uppercase tracking-widest text-sm cursor-pointer transition-all duration-300 ${
-            !candlesBlown
-              ? 'bg-gradient-to-r from-amber-500 to-orange-500 shadow-[0_0_25px_rgba(245,158,11,0.5)]'
-              : isCut
+          className={`px-8 py-4 rounded-full text-white font-sans font-bold uppercase tracking-widest text-sm cursor-pointer transition-all duration-300 ${!candlesBlown
+            ? 'bg-gradient-to-r from-amber-500 to-orange-500 shadow-[0_0_25px_rgba(245,158,11,0.5)]'
+            : isCut
               ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_25px_rgba(6,182,212,0.5)]'
               : 'bg-gradient-to-r from-rose-500 to-pink-600 shadow-[0_0_25px_rgba(244,63,94,0.5)]'
-          }`}
+            }`}
         >
           {!candlesBlown ? '🕯️ Blow the Candles!' : isCut ? '🍫 Delicious!' : '🔪 Cut the Cake!'}
         </motion.button>
@@ -885,17 +954,19 @@ const SECTION_LABELS = [
 type Phase = 'welcome' | 'message' | 'sections';
 
 export default function App() {
-  const [phase, setPhase]               = useState<Phase>('welcome');
+  const [phase, setPhase] = useState<Phase>('welcome');
   const [currentSection, setCurrentSection] = useState(0);
   const [cakeComplete, setCakeComplete] = useState(false);
-  const [isBlowing, setIsBlowing]       = useState(false);
+  const [isBlowing, setIsBlowing] = useState(false);
   const [balloonsActive, setBalloonsActive] = useState(false);
-  const [isPlaying, setIsPlaying]       = useState(false);
-  const [direction, setDirection]       = useState<1 | -1>(1);
-  const [cakeKey, setCakeKey]           = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [cakeKey, setCakeKey] = useState(0);
   const [activeMediaList, setActiveMediaList] = useState<{ type: string; src: string; title: string }[]>([]);
   const [activeMediaIndex, setActiveMediaIndex] = useState(-1);
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  const [isEntering, setIsEntering] = useState(false);
+  const [showFullMoon, setShowFullMoon] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const totalSections = SECTION_LABELS.length;
@@ -914,12 +985,17 @@ export default function App() {
 
   // Phase transitions
   const handleEnter = useCallback(() => {
-    setPhase('message');
+    setIsEntering(true);
     // Cracker sound on entering message
     const audio = new Audio(`${import.meta.env.BASE_URL}audio/crackers.mp3`);
     audio.volume = 0.6;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
     triggerConfetti();
+
+    setTimeout(() => {
+      setPhase('message');
+      setIsEntering(false);
+    }, 10000);
   }, [triggerConfetti]);
 
   const handleMessageDone = useCallback(() => {
@@ -943,7 +1019,7 @@ export default function App() {
     const h = (e: KeyboardEvent) => {
       if (activeMediaIndex >= 0) return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext();
-      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goPrev();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goPrev();
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
@@ -951,21 +1027,23 @@ export default function App() {
 
   const handleBlow = () => {
     setIsBlowing(true);
+    setShowFullMoon(true);
     setTimeout(() => setIsBlowing(false), 20000);
     if (audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
     }
   };
 
   const handleCut = () => {
     triggerConfetti();
     setBalloonsActive(true);
+    setShowFullMoon(false);
   };
 
   const handleCakeDone = () => {
     setCakeComplete(true);
     if (audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
     }
     triggerConfetti();
     setDirection(1);
@@ -979,13 +1057,13 @@ export default function App() {
   const toggleAudio = () => {
     if (!audioRef.current) return;
     if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-    else { audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {}); }
+    else { audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { }); }
   };
 
   const slideVariants = {
     enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
     center: { x: 0, opacity: 1 },
-    exit:  (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+    exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
   return (
@@ -1004,12 +1082,14 @@ export default function App() {
       {(balloonsActive || cakeComplete) && <FloatingBalloons burst={balloonsActive} />}
 
 
+
+
       <FirecrackerParticles active={isBlowing} />
 
       {/* ─────── PHASE: WELCOME ─────── */}
       <AnimatePresence mode="wait">
         {phase === 'welcome' && (
-          <WelcomeScreen key="welcome" onEnter={handleEnter} />
+          <WelcomeScreen key="welcome" onEnter={handleEnter} isEntering={isEntering} />
         )}
       </AnimatePresence>
 
@@ -1107,6 +1187,25 @@ export default function App() {
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         transition={{ duration: 0.6 }}
                       />
+                    )}
+                  </AnimatePresence>
+
+                  {/* Glowing Full Moon in Top-Right relative to this slide */}
+                  <AnimatePresence>
+                    {showFullMoon && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.3, x: 80, y: -80 }}
+                        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.5, x: 80, y: -80 }}
+                        transition={{ duration: 2.0, ease: 'easeOut' }}
+                        className="fixed top-6 right-6 sm:top-8 sm:right-8 z-10 select-none pointer-events-none"
+                      >
+                        <div className="relative">
+                          {/* Neon aura behind full moon */}
+                          <div className="absolute inset-0 bg-yellow-200/20 rounded-full blur-2xl scale-150 animate-pulse" />
+                          <span className="text-6xl sm:text-7xl filter drop-shadow-[0_0_20px_rgba(254,240,138,0.7)]">🌕</span>
+                        </div>
+                      </motion.div>
                     )}
                   </AnimatePresence>
 
@@ -1316,7 +1415,7 @@ export default function App() {
                                 <div className={`absolute inset-0 backface-hidden p-7 sm:p-9 rounded-[32px] flex flex-col justify-between items-start ${r.themeClass} border border-white/10 shadow-lg hover:scale-[1.02] hover:bg-white/[0.05] transition-all duration-300 overflow-hidden`}>
                                   {/* Decorative glowing background */}
                                   <div className={`absolute top-0 right-0 p-8 opacity-20 scale-150 rotate-12 group-hover:scale-125 transition-transform duration-500 ${r.glowBg}`}>{r.icon('w-16 h-16')}</div>
-                                  
+
                                   <div className="flex flex-col gap-4 w-full">
                                     <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-inner relative z-10 ${r.iconBg} animate-pulse`}>
                                       {r.icon('w-6 h-6')}
@@ -1325,7 +1424,7 @@ export default function App() {
                                       {r.title}
                                     </h3>
                                   </div>
-                                  
+
                                   <div className="flex items-center gap-2 text-xs font-sans text-white/50 group-hover:text-white/80 transition-colors uppercase tracking-widest mt-4 relative z-10">
                                     <span>Read Note</span>
                                     <Heart size={12} className="text-pink-400 fill-pink-400 animate-pulse" />
@@ -1438,7 +1537,7 @@ export default function App() {
                       className="mt-16 text-center flex flex-col items-center gap-6"
                     >
                       <motion.button
-                        onClick={() => { triggerConfetti(); setCakeKey(k => k + 1); setCakeComplete(false); setPhase('welcome'); }}
+                        onClick={() => { triggerConfetti(); setCakeKey(k => k + 1); setCakeComplete(false); setPhase('welcome'); setShowFullMoon(false); }}
                         className="bg-gradient-to-r from-pink-500 via-rose-500 to-cyan-500 px-8 py-4 rounded-full text-white font-sans font-bold uppercase tracking-widest text-xs flex items-center gap-3 cursor-pointer"
                         style={{ boxShadow: '0 0 25px rgba(236,72,153,0.4)' }}
                         whileHover={{ scale: 1.05, boxShadow: '0 0 45px rgba(236,72,153,0.7)' }}
