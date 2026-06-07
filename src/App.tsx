@@ -165,7 +165,7 @@ const FloatingButterflies = () => {
   );
 };
 
-const TwinklingStars = () => {
+const TwinklingStars = ({ zClass }: { zClass?: string }) => {
   const stars = useRef(
     Array.from({ length: 55 }, (_, i) => ({
       id: i,
@@ -177,7 +177,7 @@ const TwinklingStars = () => {
     }))
   ).current;
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className={`fixed inset-0 pointer-events-none overflow-hidden ${zClass || 'z-0'}`}>
       {stars.map(s => (
         <motion.div key={s.id} className="absolute bg-white rounded-full"
           style={{ left: s.left, top: s.top, width: s.size, height: s.size, boxShadow: '0 0 6px rgba(255,255,255,0.8)' }}
@@ -1081,6 +1081,35 @@ export default function App() {
       <FloatingButterflies />
       {(balloonsActive || cakeComplete) && <FloatingBalloons burst={balloonsActive} />}
 
+      {/* Glowing Full Moon & Twinkling Stars on top of Cake slide container when candles are blown */}
+      <AnimatePresence>
+        {showFullMoon && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+            >
+              <TwinklingStars zClass="z-20" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.3, x: 80, y: -80 }}
+              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, scale: 0.5, x: 80, y: -80 }}
+              transition={{ duration: 2.0, ease: 'easeOut' }}
+              className="fixed top-6 right-6 sm:top-8 sm:right-8 z-[25] select-none pointer-events-none"
+            >
+              <div className="relative">
+                {/* Neon aura behind full moon */}
+                <div className="absolute inset-0 bg-yellow-200/20 rounded-full blur-2xl scale-150 animate-pulse" />
+                <span className="text-6xl sm:text-7xl filter drop-shadow-[0_0_20px_rgba(254,240,138,0.7)]">🌕</span>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
 
 
 
@@ -1190,40 +1219,32 @@ export default function App() {
                     )}
                   </AnimatePresence>
 
-                  {/* Glowing Full Moon in Top-Right relative to this slide */}
-                  <AnimatePresence>
-                    {showFullMoon && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.3, x: 80, y: -80 }}
-                        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.5, x: 80, y: -80 }}
-                        transition={{ duration: 2.0, ease: 'easeOut' }}
-                        className="fixed top-6 right-6 sm:top-8 sm:right-8 z-10 select-none pointer-events-none"
-                      >
-                        <div className="relative">
-                          {/* Neon aura behind full moon */}
-                          <div className="absolute inset-0 bg-yellow-200/20 rounded-full blur-2xl scale-150 animate-pulse" />
-                          <span className="text-6xl sm:text-7xl filter drop-shadow-[0_0_20px_rgba(254,240,138,0.7)]">🌕</span>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+
 
                   <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16 text-center">
-                    <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-widest mb-6 text-pink-300/80"
-                        style={{ background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.3)' }}
-                      >
-                        <Sparkles size={12} /> 🎂 Happy Birthday Kanmani! 🌻💖 <Sparkles size={12} />
-                      </div>
-                      <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl font-bold mb-4 leading-tight">
-                        <span className="text-gradient-rose glow-text-pink">It's Your</span><br />
-                        <span className="text-gradient-gold glow-text-gold">Special Day!</span>
-                      </h1>
-                      <p className="text-white/55 font-sans text-base sm:text-lg mb-10 max-w-sm mx-auto">
-                        Blow the candles 🕯️, cut the cake 🔪 — and let the celebration begin! 🎉🥳
-                      </p>
-                    </motion.div>
+                    <AnimatePresence>
+                      {!showFullMoon && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-widest mb-6 text-pink-300/80"
+                            style={{ background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.3)' }}
+                          >
+                            <Sparkles size={12} /> 🎂 Happy Birthday Kanmani! 🌻💖 <Sparkles size={12} />
+                          </div>
+                          <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl font-bold mb-4 leading-tight">
+                            <span className="text-gradient-rose glow-text-pink">It's Your</span><br />
+                            <span className="text-gradient-gold glow-text-gold">Special Day!</span>
+                          </h1>
+                          <p className="text-white/55 font-sans text-base sm:text-lg mb-10 max-w-sm mx-auto">
+                            Blow the candles 🕯️, cut the cake 🔪 — and let the celebration begin! 🎉🥳
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     {/* Cake slides in from right */}
                     <motion.div
@@ -1234,7 +1255,7 @@ export default function App() {
                       <AnimatedCake key={cakeKey} onCut={handleCut} onBlow={handleBlow} onDone={handleCakeDone} />
                     </motion.div>
 
-                    {!cakeComplete && (
+                    {!cakeComplete && !showFullMoon && (
                       <motion.p className="mt-8 text-white/30 text-xs font-sans uppercase tracking-widest"
                         animate={{ opacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }}
                       >
