@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, Star, Coffee, Music, VolumeX, X, ChevronLeft, ChevronRight, ChevronDown, Smile, Sun, Flame, MessageCircle } from 'lucide-react';
